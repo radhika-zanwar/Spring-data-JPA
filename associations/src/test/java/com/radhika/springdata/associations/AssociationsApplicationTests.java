@@ -1,13 +1,17 @@
 package com.radhika.springdata.associations;
 
-import com.radhika.springdata.associations.entities.Customer;
-import com.radhika.springdata.associations.entities.PhoneNumber;
+import com.radhika.springdata.associations.onetomany.entities.Customer;
+import com.radhika.springdata.associations.onetomany.entities.PhoneNumber;
+import com.radhika.springdata.associations.onetoone.entities.License;
+import com.radhika.springdata.associations.onetoone.entities.Person;
 import com.radhika.springdata.associations.repos.CustomerRepository;
+import com.radhika.springdata.associations.repos.LicenseRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -16,6 +20,8 @@ import java.util.Set;
 class AssociationsApplicationTests {
 	@Autowired
 	CustomerRepository repository;
+	@Autowired
+	LicenseRepository licenseRepository;
 
 	@Test
 	void contextLoads() {
@@ -76,5 +82,22 @@ class AssociationsApplicationTests {
 	public void testDeleteCustomer() {
 		repository.deleteById(202);
 	}
+
+	@Test
+	public void testCreateLicense() {
+		License license = new License();
+		license.setType("Car");
+		license.setValidFrom(new Date());
+		license.setValidTo(new Date());
+
+		Person person = new Person();
+		person.setFirstName("John");
+		person.setLastName("Clinton");
+		person.setAge(40);
+
+		license.setPerson(person);
+		licenseRepository.save(license);
+	}
+
 
 }

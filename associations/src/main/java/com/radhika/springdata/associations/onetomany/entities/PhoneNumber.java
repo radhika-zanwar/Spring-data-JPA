@@ -1,4 +1,4 @@
-package com.radhika.springdata.associations.entities;
+package com.radhika.springdata.associations.onetomany.entities;
 
 import jakarta.persistence.*;
 
