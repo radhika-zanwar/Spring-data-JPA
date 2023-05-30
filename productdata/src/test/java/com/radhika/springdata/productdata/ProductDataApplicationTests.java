@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +46,7 @@ class ProductDataApplicationTests {
 	}
 	@Test
 	public void testUpdate() {
-		Product product = repository.findById(1).get();
+		Product product = repository.findById(2).get();
 		product.setPrice(1200d);
 		repository.save(product);
 	}
@@ -111,5 +112,27 @@ class ProductDataApplicationTests {
 	public void testFindAllPagingAndSorting() {
 		Pageable pageable = PageRequest.of(0,2, Sort.Direction.DESC,"name");
 		repository.findAll(pageable).forEach(p -> System.out.println(p.getName()));
+	}
+
+	@Test
+	@Transactional //added for session level Caching
+	public void testCaching() {
+		repository.findById(1);
+		repository.findById(1);
+	}
+
+	@Test
+	public void testFindAllProducts() {
+		System.out.println(repository.findAllProducts());
+	}
+
+	@Test
+	public void testFindAllProductsByPrice() {
+		System.out.println(repository.findAllProductsByPrice(1400));
+	}
+
+	@Test
+	public void testFindAllProductsCountByPrice() {
+		System.out.println(repository.findAllProductsCountByPrice(1400));
 	}
 }

@@ -15,14 +15,14 @@ public class Product {
     private String desc;
     private Double price;
 
-    public Product() {
-    }
-
-    public Product(int id, String name, String desc, Double price) {
-        this.id = id;
-        this.name = name;
-        this.desc = desc;
-        this.price = price;
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", price=" + price +
+                '}';
     }
 
     public int getId() {
